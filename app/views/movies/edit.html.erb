@@ -1,0 +1,65 @@
+<h1>Edit movie</h1>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+<%= simple_form_for @movie, data: { turbo: false } do |f| %>
+  <%= f.input :title, label: 'Title' %>
+  <%= f.input :year %>
+
+  <%= f.input :description %>
+
+  <%= f.label :genre_id %>
+  <%= f.collection_select :genre_id, Genre.all, :id, :genre, { prompt: true } %>
+  <br/>
+  <div>
+  <br/>
+    <h4>Select Actors</h4>
+    <%= f.collection_check_boxes :cast_ids, Cast.all, :id, :name %>
+
+  </div>
+  <div id="castInputContainer"><br/></div>
+  <br/>
+  <%= f.button :submit, class:"btn btn-primary" %>
+<% end %>
+<br/>
+<button id="addCast" onclick="addCast()">
+  Add another cast
+</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let castIdCounter = 0; 
+
+  const addCast = () => {
+    castIdCounter++;
+
+    const container = document.querySelector("#castInputContainer");
+
+    const fieldset = document.createElement("fieldset");
+    fieldset.id = `cast_${castIdCounter}`;
+    fieldset.classList.add("text-indigo-500");
+
+    const nameInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.name = `movie[casts_attributes][${castIdCounter}][name]`;
+    nameInput.placeholder = "Actor Name";
+
+    const dobInput = document.createElement("input");
+    dobInput.type = "date";
+    dobInput.name = `movie[casts_attributes][${castIdCounter}][dob]`;
+    dobInput.setAttribute("html5", true);
+
+   
+    
+    fieldset.appendChild(nameInput);
+    fieldset.appendChild(dobInput);
+
+
+    container.appendChild(fieldset);
+
+    container.appendChild(document.createElement("br"));
+  };
+</script>
+

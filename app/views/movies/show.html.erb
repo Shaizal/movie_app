@@ -1,0 +1,23 @@
+<div >
+  <div>
+   Movie: <%= @movie.title %>
+  </div>
+  <div>
+    Year: <%= @movie.year %>
+  </div>
+  <div>
+    Description: <%= @movie.description %>
+  </div>
+    <div>
+    Genre:
+      <%= link_to @movie.genre.genre, movies_by_genre_path(@movie.genre) %>
+  </div>
+    Casts: <% @movie.casts.each do |cast| %>
+      <%= link_to cast.name, movie_cast_path(@movie, cast) %>
+    <% end %>
+  </div>
+</div>
+
+<br/>
+<br/>
+<%= link_to 'back', movies_path  %>
