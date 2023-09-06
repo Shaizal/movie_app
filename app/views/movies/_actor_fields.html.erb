@@ -1,0 +1,16 @@
+<div class="actor-details text-indigo-500">
+    <div class="row">
+      <div class="col-md-5">
+        <%= label_tag "movie[casts_attributes][][name]", "Actor Name" %>
+        <%= text_field_tag "movie[casts_attributes][][name]", nil, class: "form-control", placeholder: "Actor Name" %>
+      </div>
+      <div class="col-md-5">
+        <%= label_tag "movie[casts_attributes][][dob]", "Date of Birth" %>
+        <%= date_field_tag "movie[casts_attributes][][dob]", nil, class: "form-control" %>
+      </div>
+    
+  <button type="button" class="remove-actor btn btn-danger align-self-end col-md-1" style="--bs-btn-padding-y: .35rem; --bs-btn-padding-x: .1rem; --bs-btn-font-size: .75rem;">X</button>
+</div>
+<br/>
+</div>
+

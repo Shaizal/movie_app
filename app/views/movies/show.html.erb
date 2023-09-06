@@ -1,23 +1,38 @@
-<div >
-  <div>
-   Movie: <%= @movie.title %>
-  </div>
-  <div>
-    Year: <%= @movie.year %>
-  </div>
-  <div>
-    Description: <%= @movie.description %>
-  </div>
-    <div>
-    Genre:
-      <%= link_to @movie.genre.genre, movies_by_genre_path(@movie.genre) %>
-  </div>
-    Casts: <% @movie.casts.each do |cast| %>
-      <%= link_to cast.name, movie_cast_path(@movie, cast) %>
-    <% end %>
-  </div>
+
+<div class="card mt-5">
+  <div class="card-body">
+    <h2 class="card-title"><%= @movie.title %></h2>
+<table class="table">
+  <tbody>
+
+    <tr>
+      <th scope="row">Year</th>
+      <td><%= @movie.year %></td>
+    </tr>
+    
+    <tr>
+      <th scope="row">Genre</th>
+      <td><%= link_to @movie.genre.genre, movies_by_genre_path(@movie.genre), class:"link-primary link-offset-2 link-underline-opacity-0" %></td>
+    </tr>
+    <tr>
+      <th scope="row">Casts</th>
+      <td>
+        <ul>
+          <% @movie.casts.each do |cast| %>
+            <li><%= link_to cast.name, movie_cast_path(@movie, cast), class:"link-primary link-offset-2 link-underline-opacity-0" %></li>
+          <% end %>
+        </ul>
+      </td>
+    
+    
+
+  </tbody>
+</table>
+<%= @movie.description %>
+</div>
+</div>
+<%= link_to 'back', movies_path, class:"btn btn-dark mt-3"  %>
 </div>
 
 <br/>
 <br/>
-<%= link_to 'back', movies_path  %>

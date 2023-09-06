@@ -5,7 +5,15 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    if params[:search].present?
+      search_terms = params[:search].split(/\s+/) # Split the search query into words
+      conditions = search_terms.map { |term| "title ILIKE ?" }.join(" OR ")
+      search_values = search_terms.map { |term| "%#{term}%" }
+
+      @movies = Movie.where(conditions, *search_values)
+    else
+      @movies = Movie.all
+    end
   end
 
   def new

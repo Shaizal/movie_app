@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :movies
   get '/:movie_id/casts/:cast_id', to: 'movies#movie_cast', as: 'movie_cast'

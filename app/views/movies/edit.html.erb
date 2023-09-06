@@ -1,65 +1,100 @@
-<h1>Edit movie</h1>
+
+<div class="text-center fw-semibold pt-4">
+<h1>Edit Movie</h1>
+</div>
 <div class="container my-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
-<%= simple_form_for @movie, data: { turbo: false } do |f| %>
-  <%= f.input :title, label: 'Title' %>
-  <%= f.input :year %>
-
-  <%= f.input :description %>
-
-  <%= f.label :genre_id %>
-  <%= f.collection_select :genre_id, Genre.all, :id, :genre, { prompt: true } %>
-  <br/>
-  <div>
-  <br/>
-    <h4>Select Actors</h4>
-    <%= f.collection_check_boxes :cast_ids, Cast.all, :id, :name %>
-
+<%= form_with(model: @movie, local: true, class:"row g-3", data: { turbo: false }) do |form| %>
+  
+  <div class="col-12">
+  <%= form.label :title, 'Title' %>
+  <%= form.text_field :title, class: 'form-control' %>
   </div>
+
+  <div class="col-md-6">
+  <%= form.label :year, 'Year of release' %>
+  <%= form.number_field :year, class: 'form-control' %>
+  </div>
+
+  <div class="col-md-6">
+  <%= form.label :genre_id %>
+  <%= form.collection_select :genre_id, Genre.all, :id, :genre, { prompt: true }, class: 'form-select' %>
+  </div>
+
+  <div class="col-12">
+  <%= form.label :description %>
+  <%= form.text_area :description, class: 'form-control' %>
+  </div>
+  
+
+    <h5>Select Actors</h5>
+    <input type="text" id="actor-search" placeholder="Search actors">
+    <div class="actor-list" data-mdb-perfect-scrollbar='true'>
+  <%= form.collection_check_boxes :cast_ids, Cast.all, :id, :name do |b| %>
+    <div class="form-check">
+      <%= b.check_box(class: 'form-check-input') %>
+      <%= b.label(class: 'form-check-label') %>
+    </div>
+  <% end %>
+</div>
+
+
   <div id="castInputContainer"><br/></div>
-  <br/>
-  <%= f.button :submit, class:"btn btn-primary" %>
+  
+
+  <%= form.submit 'Submit', class: 'btn btn-primary' %>
+  
 <% end %>
 <br/>
-<button id="addCast" onclick="addCast()">
-  Add another cast
-</button>
-    </div>
-  </div>
+<button id="addCast" class="btn btn-dark" type="button" onclick="addCast()">Add another cast</button>
+
+</div>
+</div>
 </div>
 
 <script>
-  let castIdCounter = 0; 
-
-  const addCast = () => {
-    castIdCounter++;
-
-    const container = document.querySelector("#castInputContainer");
-
-    const fieldset = document.createElement("fieldset");
-    fieldset.id = `cast_${castIdCounter}`;
-    fieldset.classList.add("text-indigo-500");
-
-    const nameInput = document.createElement("input");
-    nameInput.type = "text";
-    nameInput.name = `movie[casts_attributes][${castIdCounter}][name]`;
-    nameInput.placeholder = "Actor Name";
-
-    const dobInput = document.createElement("input");
-    dobInput.type = "date";
-    dobInput.name = `movie[casts_attributes][${castIdCounter}][dob]`;
-    dobInput.setAttribute("html5", true);
-
-   
-    
-    fieldset.appendChild(nameInput);
-    fieldset.appendChild(dobInput);
+  let castIdCounter = 0;
 
 
-    container.appendChild(fieldset);
+const addCast = () => {
+  castIdCounter++;
 
-    container.appendChild(document.createElement("br"));
-  };
+  const container = document.querySelector("#castInputContainer");
+
+
+
+  // Use Rails' `render` method to generate the HTML from the partial
+  const partialHTML = '<%= j(render(partial: 'actor_fields')) %>';
+  const div = document.createElement("div");
+  div.innerHTML = partialHTML;
+
+  const actorDetails = div.querySelector(".actor-details");
+  actorDetails.id = `cast_${castIdCounter}`;
+
+  container.appendChild(actorDetails);
+
+  // Add a click event listener to the "Remove" button
+  const removeButton = actorDetails.querySelector(".remove-actor");
+  removeButton.addEventListener("click", () => {
+    container.removeChild(actorDetails); // Remove the actor detail field
+  });
+};
+
+  document.addEventListener("DOMContentLoaded", () => {
+  const actorList = document.querySelector(".actor-list");
+  const actorSearch = document.querySelector("#actor-search");
+
+  actorSearch.addEventListener("input", () => {
+    const searchTerm = actorSearch.value.toLowerCase();
+    const checkboxes = actorList.querySelectorAll(".form-check");
+
+    checkboxes.forEach((checkbox) => {
+      const actorName = checkbox.querySelector(".form-check-label").textContent.toLowerCase();
+      checkbox.style.display = actorName.includes(searchTerm) ? "block" : "none";
+    });
+  });
+});
+
 </script>
 

@@ -13,3 +13,17 @@
  *= require_tree .
  *= require_self
  */
+.c1 {
+    width: 55%;
+}
+
+.c2 {
+    width: 15%;
+    text-align: center;
+}
+
+.actor-list {
+    height: 20vh; /* Set the desired height */
+    overflow-y: scroll;
+}
+  

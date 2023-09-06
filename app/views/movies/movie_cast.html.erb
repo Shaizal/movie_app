@@ -1,8 +1,19 @@
-<h1>Movies of <%= @cast.name %></h1>
-<p>DOB: <%= @cast.dob %> </p>
 
-<ul>
-  <% @movies.each do |movie| %>
-    <li><%= link_to movie.title, movie_path(movie) %></li>
-  <% end %>
-</ul>
+<div class="table-responsive mt-4" style="max-height: 65vh; overflow-y: auto;">
+    <table class="table table-striped table-bordered table-hover align-middle" >
+        <thead class="table-dark">
+            <tr>
+            <th><h1>Movies of <%= @cast.name %></h1></th>
+            </tr>
+        </thead>
+        <tbody >
+            <% @movies.each do |movie| %>
+                <tr>
+                    <td><li><%= link_to movie.title, movie_path(movie), class:"link-primary link-offset-2 link-underline-opacity-0" %></li></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    </div>
+    <%= link_to 'Back to Movies', movies_path, class:"btn btn-dark" %>
+  </div>
