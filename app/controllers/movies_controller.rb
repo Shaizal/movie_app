@@ -1,12 +1,26 @@
 class MoviesController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
+
+
+def set_movie
+  @movie = Movie.find(params[:id])
+end
 
   def show
     @movie = Movie.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @movie }
+    end
+
   end
+
 
   def index
     if params[:search].present?
-      search_terms = params[:search].split(/\s+/) # Split the search query into words
+      search_terms = params[:search].split(/\s+/)
       conditions = search_terms.map { |term| "title ILIKE ?" }.join(" OR ")
       search_values = search_terms.map { |term| "%#{term}%" }
 
@@ -14,41 +28,77 @@ class MoviesController < ApplicationController
     else
       @movies = Movie.all
     end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @movie }
+    end
+
   end
+
 
   def new
     @movie = Movie.new
-    @movie.build_genre  # Build the nested genre attributes
-    @movie.casts.build  # Build a nested cast attribute for new actors
+    @movie.build_genre
+    @movie.casts.build
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @movie }
+    end
+
   end
 
   def create
     @movie = Movie.new(movie_params)
-    if @movie.save
-      redirect_to @movie
-    else
-      render 'new'
+
+    respond_to do |format|
+      if @movie.save
+        format.html { redirect_to @movie }
+        format.json { render json: @movie, status: :created, location: @movie }
+      else
+        format.html { render 'new' }
+        format.json { render json: @movie.errors, status: :unprocessable_entity }
+      end
     end
   end
 
+
   def edit
     @movie = Movie.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @movie }
+    end
+
   end
+
 
   def update
     @movie = Movie.find(params[:id])
 
-    if @movie.update(movie_params)
-      redirect_to @movie
-    else
-      render 'edit'
+    respond_to do |format|
+      if @movie.update(movie_params)
+        format.html { redirect_to @movie }
+        format.json { render json: @movie }
+      else
+        format.html { render 'edit' }
+        format.json { render json: @movie.errors, status: :unprocessable_entity }
+      end
     end
   end
+
 
   def destroy
     @movie = Movie.find(params[:id])
     @movie.destroy
-    redirect_to movies_path
+
+    respond_to do |format|
+      format.html { redirect_to movies_path }
+      format.json { head :no_content }
+    end
+
   end
 
   def movie_cast
