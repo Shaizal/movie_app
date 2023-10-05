@@ -4,12 +4,13 @@
 
  <form class="d-flex pb-4" role="search">
 <%= form_tag movies_path, method: :get do %>
-  <%= text_field_tag :search, params[:search], class:"form-control me-2", placeholder: "Search by title" %>
-  <%= submit_tag "Search", class:"btn btn-outline-dark" %>
+  <%= text_field_tag :search, params[:search], class: "form-control me-2", placeholder: "Search by title" %>
+  <%= submit_tag "Search", class: "btn btn-outline-dark" %>
 <% end %>
 </form>
 <br>
-<% if @movies.empty? %>
+<% if @movies.nil? %>
+
     <div class="alert alert-danger text-center align-center" role="alert" style="max-width: 500px; margin: 0 auto;">
     <h4 class="alert-heading">No Movies Found!</h4>
      <hr>
@@ -36,6 +37,6 @@
             <% end %>
         </tbody>
     </table>
-    </div>
+    </div> 
 <% end %>
 <br/>

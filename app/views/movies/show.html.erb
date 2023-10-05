@@ -1,38 +1,46 @@
-
 <div class="card mt-5">
   <div class="card-body">
     <h2 class="card-title"><%= @movie.title %></h2>
-<table class="table">
-  <tbody>
-
-    <tr>
-      <th scope="row">Year</th>
-      <td><%= @movie.year %></td>
-    </tr>
-    
-    <tr>
-      <th scope="row">Genre</th>
-      <td><%= link_to @movie.genre.genre, movies_by_genre_path(@movie.genre), class:"link-primary link-offset-2 link-underline-opacity-0" %></td>
-    </tr>
-    <tr>
-      <th scope="row">Casts</th>
-      <td>
-        <ul>
-          <% @movie.casts.each do |cast| %>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">Year</th>
+          <td><%= @movie.year %></td>
+        </tr>
+        <tr>
+          <th scope="row">Genre</th>
+          <td>
+            <%= link_to @movie.genre.genre, movies_by_genre_path(@movie.genre), class:"link-primary link-offset-2 link-underline-opacity-0" %>
+          </td>
+        </tr>
+        <tr>
+  <th scope="row">Casts</th>
+  <td>
+    <div class="row">
+      <div class="col-6">
+        <ul style="max-height: 200px; overflow-y: auto; list-style: none; padding-left: 0;">
+          <% @movie.casts.each_slice((@movie.casts.size/2.0).ceil) do |cast_group| %>
+            <% cast_group.each do |cast| %>
+              <li><%= link_to cast.name, movie_cast_path(@movie, cast), class:"link-primary link-offset-2 link-underline-opacity-0" %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+      <div class="col-6">
+        <ul style="max-height: 200px; overflow-y: auto; list-style: none; padding-left: 0;">
+          <% @movie.casts.drop(@movie.casts.size/2).each do |cast| %>
             <li><%= link_to cast.name, movie_cast_path(@movie, cast), class:"link-primary link-offset-2 link-underline-opacity-0" %></li>
           <% end %>
         </ul>
-      </td>
-    
-    
+      </div>
+    </div>
+  </td>
+</tr>
 
-  </tbody>
-</table>
-<%= @movie.description %>
-</div>
+
+      </tbody>
+    </table>
+    <%= @movie.description %>
+  </div>
 </div>
 <%= link_to 'back', movies_path, class:"btn btn-dark mt-3"  %>
-</div>
-
-<br/>
-<br/>
