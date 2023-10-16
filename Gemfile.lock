@@ -234,6 +234,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   capybara
+  concurrent-ruby (~> 1.1)
   debug
   faraday
   importmap-rails

@@ -16,7 +16,7 @@ development:
   adapter: postgresql
   encoding: unicode
   database: D2
-  pool: 5
+  pool: 50
   username: postgres
   password: password
 
@@ -42,7 +42,7 @@ test:
   adapter: postgresql
   encoding: unicode
   database: D2
-  pool: 5
+  pool: 50
   username: postgres
   password: password
 
@@ -50,6 +50,6 @@ production:
   adapter: postgresql
   encoding: unicode
   database: D2
-  pool: 5
+  pool: 50
   username: postgres
   password: password

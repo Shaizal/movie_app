@@ -9,7 +9,7 @@
         <tbody >
             <% @movies.each do |movie| %>
                 <tr>
-                    <td><li><%= link_to movie.title, movie_path(movie), class:"link-primary link-offset-2 link-underline-opacity-0" %></li></td>
+                    <td><li><%= link_to "#{movie.title} - #{movie.year}", movie_path(movie), class:"link-primary link-offset-2 link-underline-opacity-0" %></li></td>
                 </tr>
             <% end %>
         </tbody>
