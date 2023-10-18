@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <%= link_to 'Movie App' , root_path, class:"navbar-brand" %>
+    <%= link_to 'Movie App', root_path, class: "navbar-brand" %>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -10,8 +10,15 @@
         <li class="nav-item">
           <%= link_to 'New Movie', new_movie_path, class: "nav-link" %>
         </li>
-</ul>
-   
+      </ul>
+      <div class="d-flex">
+        <% if user_signed_in? %>
+          <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+        <% else %>
+          <%= link_to 'Sign In', new_user_session_path, class: "btn btn-success btn-sm mx-2" %>
+          <%= link_to 'Sign Up', new_user_registration_path, class: "btn btn-primary btn-sm mx-2 " %>
+        <% end %>
+      </div>
     </div>
   </div>
 </nav>

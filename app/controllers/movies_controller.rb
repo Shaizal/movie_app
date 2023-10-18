@@ -17,6 +17,7 @@ class MoviesController < ApplicationController
   end
 
 
+
   def index
     if params[:search].present?
       db_results = Movie.where("title LIKE ?", "%#{params[:search]}%")
@@ -85,8 +86,6 @@ class MoviesController < ApplicationController
       end
     end
   end
-
-
 
 
 
