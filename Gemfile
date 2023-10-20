@@ -14,6 +14,8 @@ gem "pg", "~> 1.1"
 gem "faraday"
 gem 'concurrent-ruby', '~> 1.1'
 gem 'devise'
+gem 'authy'
+gem 'pry-rails'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"

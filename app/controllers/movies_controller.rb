@@ -93,14 +93,18 @@ class MoviesController < ApplicationController
     tmdb_api = TmdbApi.new
     movie_details = tmdb_api.fetch_movie_by_id(tmdb_id)
 
-
     puts "tmdb_id: #{tmdb_id}"
     puts "movie_details: #{movie_details.inspect}"
 
     if movie_details && movie_details['title']
       genre_mapping = tmdb_api.fetch_genre_mapping
-      genre_id = movie_details['genres'][0]['id']
-      genre_name = genre_mapping[genre_id] || 'Unknown'
+
+      if movie_details['genres'].present? && movie_details['genres'][0].present? && movie_details['genres'][0]['id'].present?
+        genre_id = movie_details['genres'][0]['id']
+        genre_name = genre_mapping[genre_id] || 'Unknown'
+      else
+        genre_name = 'Unknown'
+      end
 
       genre = Genre.find_or_create_by(genre: genre_name)
 
@@ -120,7 +124,7 @@ class MoviesController < ApplicationController
         puts "cast_data: #{cast_data.inspect}"
 
         cast_data.each do |cast_member_data|
-          cast_member = Cast.find_or_create_by(name: cast_member_data['name'])
+          cast_member = Cast.find_or create_by(name: cast_member_data['name'])
           movie.casts << cast_member
         end
 
@@ -130,6 +134,7 @@ class MoviesController < ApplicationController
       return nil
     end
   end
+
 
 
 
