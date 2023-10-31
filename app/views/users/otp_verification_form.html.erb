@@ -1,0 +1,4 @@
+<%= form_tag verify_otp_path, method: :post do %>
+  <%= text_field_tag :otp_code %>
+  <%= submit_tag 'Submit OTP' %>
+<% end %>

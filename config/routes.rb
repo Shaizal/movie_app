@@ -4,15 +4,6 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
   }
 
-  resources :users, only: [:create]
-  devise_scope :user do
-    get 'verify_otp', to: 'users/registrations#verify_otp'
-    post 'verify_otp', to: 'users/registrations#verify_otp'
-  end
-
-
-
-
   resources :movies, only: [:index, :show, :create, :update, :destroy, :new, :edit] do
     collection do
       get 'search', defaults: { format: :json }
@@ -25,7 +16,12 @@ Rails.application.routes.draw do
   get 'movies/check_movie_details/:tmdb_id', to: 'movies#check_movie_details', as: 'check_movie_details'
   post 'movies/save_movie_details/:tmdb_id', to: 'movies#save_movie_details', as: 'save_movie_details'
 
-
+  scope 'users' do
+    get 'phone_number_form', to: 'users#phone_number_form', as: 'phone_number_form'
+    post 'verify_phone_number', to: 'users#verify_phone_number', as: 'verify_phone_number'
+    get 'otp_verification_form', to: 'users#otp_verification_form', as: 'otp_verification_form'
+    post 'verify_otp', to: 'users#verify_otp', as: 'verify_otp'
+  end
 
 
   root 'movies#index'

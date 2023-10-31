@@ -1,0 +1,4 @@
+<%= form_for @user, url: verify_phone_number_path, method: :post do |f| %>
+  <%= f.text_field :phone_number %>
+  <%= f.submit 'Submit Phone Number' %>
+<% end %>
