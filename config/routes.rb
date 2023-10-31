@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+  }
+
+
+
   resources :movies, only: [:index, :show, :create, :update, :destroy, :new, :edit] do
     collection do
       get 'search', defaults: { format: :json }
