@@ -1,7 +1,15 @@
+
 Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: 'users/registrations',
   }
+
+  resources :users, only: [:create]
+  devise_scope :user do
+    get 'verify_otp', to: 'users/registrations#verify_otp'
+    post 'verify_otp', to: 'users/registrations#verify_otp'
+  end
+
 
 
 
@@ -16,6 +24,9 @@ Rails.application.routes.draw do
 
   get 'movies/check_movie_details/:tmdb_id', to: 'movies#check_movie_details', as: 'check_movie_details'
   post 'movies/save_movie_details/:tmdb_id', to: 'movies#save_movie_details', as: 'save_movie_details'
+
+
+
 
   root 'movies#index'
 end

@@ -124,7 +124,7 @@ class MoviesController < ApplicationController
         puts "cast_data: #{cast_data.inspect}"
 
         cast_data.each do |cast_member_data|
-          cast_member = Cast.find_or create_by(name: cast_member_data['name'])
+          cast_member = Cast.find_or_create_by(name: cast_member_data['name'])
           movie.casts << cast_member
         end
 

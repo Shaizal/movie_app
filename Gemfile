@@ -16,6 +16,7 @@ gem 'concurrent-ruby', '~> 1.1'
 gem 'devise'
 gem 'authy'
 gem 'pry-rails'
+gem 'httparty'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
@@ -77,6 +78,10 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'vonage'
+  # Gemfile
+gem 'phony_rails', '~> 0.12' # Use the latest version compatible with your Rails version
+
 end
 
 gem "ransack", "~> 4.0"
